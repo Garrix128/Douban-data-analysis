@@ -1,0 +1,296 @@
+{% extends "base.html" %}
+{% block title %}数量信息{% endblock %}
+{% block stylecontent %}
+<link href="/static/css/styles.css" rel="stylesheet"/>
+{% endblock %}
+{% block content %}
+<div class="container-fluid px-4">
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"></li>
+    </ol>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-chart-area me-1"></i>
+            各国电影数量占比
+        </div>
+        <div class="card-body">
+            <div id="mainOne" style="width: 100%;height: 450px;"></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-chart-bar me-1"></i>
+                    各国语言数量占比
+                </div>
+                <div class="card-body">
+                    <div id="mainTwo" style="width:100%;height: 600px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-chart-area me-1"></i>
+            历年剧情, 喜剧数量
+        </div>
+        <div class="card-body">
+            <div id="mainThree" style="width: 100%;height: 450px;"></div>
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock %}
+{% block scriptcontent %}
+
+<script>
+  // 豆瓣电影数量各国占比(饼图)
+var chartDom = document.getElementById('mainOne');
+var myChart = echarts.init(chartDom);
+var option;
+
+option = {
+    title: {
+        text: '豆瓣电影数量各国占比(饼图)',
+        left: 'center',
+        textStyle: {
+            color: '#982cb6',
+            fontSize: 16,
+        },
+    },
+    tooltip: {
+        trigger: 'item',
+        formatter: '{b}: {c}部 ({d}%)',
+        textStyle: {
+            color: '#83a843',
+        },
+    },
+    legend: {
+        type: 'plain',
+        orient: 'vertical',
+        left: 'left',
+        icon: 'pin',
+        itemWidth: 25,
+        itemHeight: 25,
+        textStyle: {
+            fontSize: 18,
+            color: '#00f',
+        }
+    },
+    series: [{
+        name: '电影部数',
+        type: 'pie',
+        radius: ['40%', '60%'],
+        data: {{ country_data | tojson }},
+        label: {
+            show: true,
+            formatter: '{b}: {c}部 ({d}%)',
+            fontSize: 18,
+        },
+        labelLine: {
+            lineStyle: {
+                color: '#00f',
+            },
+        },
+        itemStyle: {
+            borderRadius: 10,
+            borderColor: '#000',
+            borderWidth: 2,
+        },
+        animationDuration: 5000,
+        animationEasing: 'elasticIn',
+    }],
+    color: ['#43cc49', '#1e3bd1', '#e4644d', '#a0ea08']
+};
+
+option && myChart.setOption(option);
+</script>
+
+<script>
+  //语种柱状图
+  var chartDom = document.getElementById('mainTwo')
+  var myChart = echarts.init(chartDom)
+  var option
+  option = {
+    //标题
+    title: {
+      text: '各国电影语种柱状图',
+      left: 'center',
+      textStyle: {
+        color: '#2f7add',
+        fontSize: 16,
+      },
+    },
+    //提示框
+    tooltip: {
+      trigger: 'axis',
+      textStyle: {
+        color: '#000',
+      },
+      axisPointer: {
+        type: 'cross',
+      },
+    },
+    //图例
+    legend: {
+      orient: 'vertical',
+      left: 'right',
+    },
+    //横轴信息
+    xAxis: {
+      type: 'category',
+      data: {{ lang_keys | tojson }},
+      name: '语言',
+    },
+    //纵轴信息
+    yAxis: [{
+      type: 'value',
+      name: '语言数量',
+    }],
+    //缩放
+    dataZoom:{
+      type: 'inside',
+      start: 80,
+    },
+    //系列列表
+    series: [
+      {
+        name: '数量',
+        type: 'bar',
+        data:{{ y1 | tojson }},
+        showBackground: true,
+        backgroundStyle: {
+          color: 'rgba(212,192,220,0.5)',
+        },
+        itemStyle: {
+          color: 'rgba(61,227,49,0.8)',
+        },
+        //设置动画效果
+        animationDuration: 5000,
+        animationEasing: 'cubicOut',
+      }],
+  }
+  option && myChart.setOption(option)
+</script>
+
+<script>
+    var chartDom = document.getElementById('mainThree')
+    var myChart = echarts.init(chartDom)
+    var option
+    option = {
+      //标题
+      title: {
+        text: '历年喜剧和剧情电影数量',
+        left: 'center',
+        textStyle: {
+          color: '#982cb6',
+          fontSize: 16,
+        },
+      },
+      //提示框
+      tooltip: {
+        trigger: 'axis',
+        textStyle: {
+          color: '#83a843',
+        },
+        axisPointer: {
+          type: 'cross',
+        }
+      },
+      //图例
+      legend: {
+        data: ['剧情电影数量', '喜剧电影数量'],
+        type: 'plain',
+        orient: 'vertical',
+        left: 'left',
+        icon: 'pin',
+      },
+      //横轴信息
+      xAxis: {
+        type: 'category',
+        data: {{ years | tojson }},
+        name: '年份',
+    },
+    //纵轴信息
+    yAxis:[
+      //左侧
+      {
+        type: 'value',
+        name: '剧情电影数量',
+      },
+      //右侧
+      {
+        type: 'value',
+        name: '喜剧电影数量',
+      }
+    ],
+    //工具箱
+    toolbox: {
+        orient: 'vertical',
+        left: 'right',
+        feature: {
+          dataZoom: {},
+          dataView: {},
+          restore: {},
+          saveAsImage: {},
+          magicType: {
+            type: ['bar', 'line'],
+          }
+      }
+    },
+    //系列列表
+    series:[
+        //左侧y轴，剧情电影数量，柱状图
+      {
+        name:'剧情电影数量',
+        type:'bar',
+        yAxisIndex: 0,
+        data:{{ drama_count | tojson }},
+        showBackground: true,
+        backgroundStyle: {
+          color: 'rgba(246,242,248,0.8)',
+        },
+        itemStyle: {
+            color: 'rgba(11,227,49,0.8)',
+        },
+        label:{
+          show: true,
+          rotate:45,
+          position: 'top',
+          textStyle: {
+            color: '#000',
+          }
+        },
+        //设置动画效果
+        animationDuration: 5000,
+        animationEasing: 'cubicOut',
+      },
+        //右侧y轴，喜剧电影数量，折线图
+      {
+        name:'喜剧电影数量',
+        type:'line',
+        yAxisIndex: 1,
+        data:{{ comedy_count | tojson }},
+        lineStyle: {
+          color: 'rgba(32,26,202,0.8)',
+        },
+        itemStyle: {
+          color: 'rgba(78,17,170,0.8)',
+        },
+        //设置动画效果
+        animationDuration: 5000,
+        animationEasing: 'elasticIn',
+      }
+    ]
+    }
+    option && myChart.setOption(option)
+</script>
+
+{% endblock %}
+

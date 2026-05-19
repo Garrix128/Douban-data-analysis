@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>豆瓣电影数据可视化</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+</head>
+<body>
+<header>
+    <a href="javascript:history.back()" class="return-button">返回</a>
+    <h1>豆瓣电影数据可视化</h1>
+    <!--顶部时间-->
+    <div class="showTime"></div>
+    <script>
+        var t = null;
+        t = setTimeout(time, 1000);
+        function time() {
+            clearInterval(t); //清除定时器
+            dt = new Date();  //获取当前时间
+            var y = dt.getFullYear();
+            var mt = dt.getMonth() + 1;
+            var day = dt.getDate();
+            var h = dt.getHours();
+            var m = dt.getMinutes();
+            var s = dt.getSeconds();
+            document.querySelector(".showTime").innerHTML = '当前时间：' + y + '年' + mt + '月' + day + '日' + '-' + h + '时' + m + '分' + s + '秒';
+            t = setTimeout(time, 1000); // 设定定时器，循环运行
+        }
+    </script>
+</header>
+<!--中间信息-->
+<section class="mainbox">
+    <div class="column">
+        <div class="panel">
+            <h2>电影类型TOP5</h2>
+            {{ chart_html1 | safe }}
+        </div>
+        <div class="panel">
+            <h2>中英文电影占比</h2>
+            {{ chart_html3 | safe }}
+        </div>
+    </div>
+    <div class="column">
+        <div class="no">
+            <div class="no-hd">
+                <!-- 在这里实现具体的数量-->
+                <ul>
+                    <li>{{ data.allData }}</li>
+                    <li>{{ data.maxRate }}</li>
+                    <li>{{ data.typeAll }}</li>
+                    <li>{{ data.maxLang }}</li>
+                </ul>
+            </div>
+            <div class="no-bd">
+                <!-- 显示标签-->
+                <ul>
+                    <li>电影个数</li>
+                    <li>最高分数</li>
+                    <li>电影种类数</li>
+                    <li>最大语言数</li>
+                </ul>
+            </div>
+        </div>
+        <div class="map">
+            <iframe src="{{ url_for('static', filename='html/map3d.html') }}"
+                    style="width: 100%; height: 100%; border: none;"></iframe>
+        </div>
+    </div>
+    <div class="column">
+        <div class="panel">
+            <h2>年份电影数据量</h2>
+            {{ chart_html2 | safe }}
+        </div>
+        <div class="panel">
+            <h2>电影评论数折线图</h2>
+            {{ chart_html4 | safe }}
+        </div>
+    </div>
+</section>
+<!--底部信息-->
+<section>
+    <div class="column">
+        <div class="no">
+            <div class="no-bd">
+                <ul>
+                    <li>好好学习</li>
+                    <li>天天向上</li>
+                    <li>GOOD GOOD STUDY</li>
+                    <li>DAY DAY UP</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+ <!--底部信息-->
+</section>
+<script src="{{ url_for('static', filename='js/flexible.js') }}"></script>
+<script src="{{ url_for('static', filename='js/echarts.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/china.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+<script src="{{ url_for('static', filename='js/utils.js') }}"></script>
+<script src="{{ url_for('static', filename='js/index.js') }}"></script>
+</body>
+</html>

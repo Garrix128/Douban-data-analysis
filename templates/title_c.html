@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}标题词云{% endblock %}
+{% block stylecontent %}
+<link href="/static/css/styles.css" rel="stylesheet"/>
+{% endblock %}
+{% block content %}
+<div class="container-fluid px-4">
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"></li>
+    </ol>
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-chart-area me-1"></i>
+            标题词云图
+        </div>
+        <div class="card-body" style="text-align:center">
+            <img style="width:50%" src="/static/images/title.png" alt="">
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scriptcontent %}
+{% endblock %}

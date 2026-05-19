@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}自定义词云{% endblock %}
+{% block stylecontent %}
+<link href="/static/css/styles.css" rel="stylesheet"/>
+{% endblock %}
+{% block content %}
+<div class="container-fluid px-4">
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"></li>
+    </ol>
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-chart-area me-1"></i>
+            评论词云图
+        </div>
+        <div class="card-body">
+            <form style="margin-top: 15px" method="post" action="/comments_c" class="form-inline ">
+                <div class="form-group mx-sm-3 mb-2">
+                    <label for="inputPassword2" class="sr-only"></label>
+                    <input name="searchIpt" type="text" class="form-control" id="inputPassword2"
+                           placeholder="请输入电影名字...">
+                </div>
+                <button type="submit" style="margin-left: 15px" class="btn btn-primary mb-2">生成词云图</button>
+            </form>
+        </div>
+        <hr>
+        <div class="card-body">
+            <div id="mainTwo" style="width: 100%;text-align:center;">
+                <img style="width:50%" src="/static/images/comments.png" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scriptcontent %}
+{% endblock %}

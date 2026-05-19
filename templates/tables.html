@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block title %}操作表信息{% endblock %}
+{% block stylecontent %}
+<link href="/static/css/styles.css" rel="stylesheet"/>
+<style>
+    /* 表格自适应宽度 */
+    #datatablesSimple {
+        width: 100%;
+        table-layout: auto;
+    }
+
+    /* 表头自适应 */
+    #datatablesSimple th {
+        white-space: nowrap; /* 阻止标签折行 */
+        vertical-align: middle; /* 垂直居中 */
+        text-align: center;
+    }
+
+    /* 表格内容上下居中 */
+    #datatablesSimple td {
+        vertical-align: middle; /* 垂直居中 */
+        text-align: center; /* 水平居中 */
+    }
+
+    /* 图像单元格样式调整 */
+    #datatablesSimple td img {
+        object-fit: cover;
+        height: 100px; /* 可根据需要调整高度 */
+        width: auto;
+        max-width: 100px;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<div class="container-fluid px-4">
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"></li>
+    </ol>
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-chart-area me-1"></i>
+            数据表操作
+        </div>
+        <div class="card-body">
+            <table id="datatablesSimple">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>电影名</th>
+                    <th>图片</th>
+                    <th>评分</th>
+                    <th>导演</th>
+                    <th>演员</th>
+                    <th>语言</th>
+                    <th>片场</th>
+                    <th>上映时间</th>
+                    <th>电影类型</th>
+                    <th>制片国家</th>
+                    <th>短评个数</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in tablelist %}
+                <tr>
+                    <td>{{ item[0] }}</td>
+                    <td style="text-decoration: underline">
+                        <a style="color: #000;" href="/search/{{ item[0] }}">
+                            {{ item[3] }}
+                        </a>
+                    </td>
+                    <td style="text-align: center;width: 150px">
+                        <a target="_blank" href="{{ item[16] }}">
+                            <img style="width: 75%;object-fit:cover;height:150px;" src="{{ item[5] }}" alt="">
+                        </a>
+                    </td>
+                    <td><span class="text-primary">{{ item[2] }}分</span></td>
+                    <td>{{ item[1] }}</td>
+                    <td>{{ item[4] }}</td>
+                    <td>{{ item[9] }}</td>
+                    <td>{{ item[11] }}分钟</td>
+                    <td>{{ item[10] }}</td>
+                    <td>{{ item[7] }}</td>
+                    <td>{{ item[8] }}</td>
+                    <td>{{ item[12] }}个短评</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

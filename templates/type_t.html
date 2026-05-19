@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block title %}类型信息{% endblock %}
+{% block stylecontent %}
+<link href="/static/css/styles.css" rel="stylesheet"/>
+{% endblock %}
+{% block content %}
+<div class="container-fluid px-4">
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"></li>
+    </ol>
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-chart-area me-1"></i>
+            电影类型饼图
+        </div>
+        <div class="card-body">
+            <div id="mainOne" style="width: 100%;height: 650px;"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scriptcontent %}
+<script>
+  // 电影类型饼图
+  var chartDom = document.getElementById('mainOne')
+  var myChart = echarts.init(chartDom)
+  var option
+  option = {
+    //标题
+    title: {
+      text: '',
+      left: 'center',
+      textStyle: {
+        color: '#982cb6',
+        fontSize: 16,
+      },
+    },
+    //提示框
+    tooltip: {
+      trigger: 'item',
+      textStyle: {
+        color: '#83a843',
+      },
+    },
+    //图例
+    legend: {
+      type: 'plain',
+      orient: 'horizontal',
+      left: 'center',
+      icon: 'pin',
+      itemWidth: 25,
+      itemHeight: 25,
+      textStyle: {
+        fontSize: 18,
+        color: '#00f',
+      },
+    },
+    //系列列表
+    series: [
+      {
+        name: '电影类型',
+        type: 'pie',
+        radius: ['40%', '60%'],
+        data: {{ top10Data | safe }},
+        label: {
+          show: false,
+          position:'center'
+        },
+        labelLine: {
+          lineStyle: {
+            color: '#00f',
+          },
+        },
+        itemStyle: {
+          borderRadius: 10,
+          borderColor: '#000',
+          borderWidth: 2,
+        },
+        emphasis: {
+          label:{
+            show: true,
+            fontSize: 40,
+            fontWeight: 'bold',
+            textStyle: {
+              color: '#00f',
+            }
+          }
+        },
+        //设置动画效果
+        //animationType:'scale',
+        animationDuration: 5000,
+        animationEasing: 'elasticIn',
+      }],
+    //自定义颜色
+    color: ['#43cc49', '#1e3bd1', '#e4644d', '#a0ea08'],
+  }
+  option && myChart.setOption(option)
+</script>
+
+{% endblock %}

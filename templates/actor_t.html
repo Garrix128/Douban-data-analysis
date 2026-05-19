@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+{% block title %}演员信息{% endblock %}
+{% block stylecontent %}
+<link href="/static/css/styles.css" rel="stylesheet"/>
+{% endblock %}
+{% block content %}
+<main>
+    <div class="container-fluid px-4">
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"></li>
+        </ol>
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="fas fa-chart-area me-1"></i>
+                导演作品数量前20
+            </div>
+            <div class="card-body">
+                <div id="mainOne" style="width: 100%;height: 450px;"></div>
+            </div>
+        </div>
+    </div>
+</main>
+<main>
+    <div class="container-fluid px-4">
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"></li>
+        </ol>
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="fas fa-chart-area me-1"></i>
+                演员参演排名前20
+            </div>
+            <div class="card-body">
+                <div id="mainTwo" style="width: 100%;height: 450px;"></div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+{% block scriptcontent %}
+
+<script>
+  // 导演作品数量前20
+  var chartDom = document.getElementById('mainOne')
+  var myChart = echarts.init(chartDom)
+  var option
+  option = {
+    //标题
+    title: {
+      text: ' 导演作品数量前20',
+      left: 'center',
+      textStyle: {
+        color: '#2f7add',
+        fontSize: 16,
+      },
+    },
+    //提示框
+    tooltip: {
+      trigger: 'axis',
+      textStyle: {
+        color: '#000',
+      },
+      axisPointer: {
+        type: 'cross',
+      },
+    },
+    //图例
+    legend: {
+      orient: 'vertical',
+      left: 'right',
+    },
+    //横轴信息
+    xAxis: {
+      type: 'value',
+      name: '数量',
+    },
+    //纵轴信息
+    yAxis: {
+      type: 'category',
+      data: {{ x | safe }},
+      name: '导演',
+    },
+    //缩放
+    dataZoom: {
+      type: 'inside',
+      start: 0,
+      orient: 'vertical',
+    },
+    //系列列表
+    series: [
+      {
+        name: '作品数量',
+        type: 'bar',
+        data:{{ y | safe }},
+        showBackground: true,
+        backgroundStyle: {
+          color: 'rgba(212,192,220,0.5)',
+        },
+        itemStyle: {
+          color: 'rgba(26,66,152,0.8)',
+        },
+        //设置动画效果
+        animationDuration: 5000,
+        animationEasing: 'cubicOut',
+      }],
+  }
+  option && myChart.setOption(option)
+</script>
+
+<script>
+  //演员参演排名前20
+  var chartDom = document.getElementById('mainTwo')
+  var myChart = echarts.init(chartDom)
+  var option
+  option = {
+    //标题
+    title: {
+      text: '',
+      left: 'center',
+      textStyle: {
+        color: '#2f7add',
+        fontSize: 16,
+      },
+    },
+    //提示框
+    tooltip: {
+      trigger: 'axis',
+      textStyle: {
+        color: '#000',
+      },
+    },
+    //图例
+    legend: {
+      orient: 'vertical',
+      left: 'right',
+    },
+    //横轴信息
+    xAxis: {
+      type: 'category',
+      data: {{ x1 | safe }},
+      boundaryGap: false,
+      name: '演员',
+    },
+    //纵轴信息
+    yAxis: {
+      type: 'value',
+      name: '数量',
+    },
+    //系列列表
+    series: [
+      {
+        name: '作品数量',
+        type: 'line',
+        data:{{ y1 | safe }},
+        areaStyle: {
+          color: 'rgba(136,172,216,0.5)',
+        },
+        lineStyle: {
+          color: 'rgba(22,113,24,0.5)',
+        },
+        itemStyle: {
+          color: 'rgba(62,22,184,0.5)',
+        },
+        //设置动画效果
+        animationDuration: 5000,
+        animationEasing: 'elasticOut',
+      }],
+  }
+  option && myChart.setOption(option)
+</script>
+{% endblock %}

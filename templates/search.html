@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}搜索信息{% endblock %}
+{% block stylecontent %}
+<link href="/static/css/styles.css" rel="stylesheet"/>
+{% endblock %}
+{% block content %}
+<div class="container-fluid px-4">
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"></li>
+    </ol>
+    <form style="margin-top: 15px" method="post" action="/search/0" class="form-inline ">
+        <div class="form-group mx-sm-3 mb-2">
+            <label for="inputPassword2" class="sr-only"></label>
+            <input name="searchIpt" type="text" class="form-control" id="inputPassword2"
+                   placeholder="请输入电影名关键字">
+        </div>
+        <button type="submit" style="margin-left: 15px" class="btn btn-primary mb-2">搜索</button>
+    </form>
+    {% for item in data %}
+    <div class="card" style="width: 100%;margin-bottom: 20px">
+        <div style="margin-left: 15px;margin-top: 15px">
+            {% for imgSrc in item[15] %}
+            <img src="{{ imgSrc }}" class="rounded" alt="...">
+            {% endfor %}
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                            <span class="text-primary fw-bold">
+                                {{ item[3] }}
+                            </span>
+                <span class="text-danger">
+                                {{ item[2] }}分
+                            </span>
+                <span class="text-success">
+                                {{ item[6] }}年
+                            </span>
+            </h5>
+            <p class="card-text">
+                简介：{{ item[14] }}
+            </p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+{% block scriptcontent %}
+{% endblock %}
+

@@ -1,0 +1,207 @@
+{% extends "base.html" %}
+{% block title %}首页{% endblock %}
+{% block stylecontent %}
+<link href="/static/css/styles.css" rel="stylesheet"/>
+{% endblock %}
+{% block content %}
+<div class="container-fluid px-4">
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active"></li>
+    </ol>
+    <div class="row">
+        <div class="col-xl-2 col-md-6">
+            <div class="card bg-primary text-white mb-4">
+                <div class="card-body">电影个数</div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="#">{{ dataLen }}个</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-2 col-md-6">
+            <div class="card bg-warning text-white mb-4">
+                <div class="card-body">豆瓣最高评分</div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="#">{{ maxRate }}分</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-2 col-md-6">
+            <div class="card bg-success text-white mb-4">
+                <div class="card-body">出场最多演员</div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="#">{{ maxCast }}</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-2 col-md-6">
+            <div class="card bg-danger text-white mb-4">
+                <div class="card-body">制片国家最多数</div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="#">中国大陆</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-2 col-md-6">
+            <div class="card bg-info text-white mb-4">
+                <div class="card-body">电影种类数</div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="#">{{ typeAll }}种</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-2 col-md-6">
+            <div class="card bg-dark text-white mb-4">
+                <div class="card-body">电影语言最多数</div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="#">{{ maxLang }}</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-chart-area me-1"></i>
+                    电影种类饼状图
+                </div>
+                <div class="card-body">
+                    <div id="mainOne" style="width: 100%;height: 400px"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-chart-bar me-1"></i>
+                    电影评分折线图
+                </div>
+                <div class="card-body">
+                    <div id="mainTwo" style="width: 100%;height: 400px"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scriptcontent %}
+
+<script>
+  // 电影种类饼状图
+  var chartDom = document.getElementById('mainOne')
+  var myChart = echarts.init(chartDom)
+  var option
+  option = {
+    //标题
+    title: {
+      text: '电影种类饼状图',
+      left: 'center',
+      subtext: '豆瓣电影',
+      textStyle: {
+        color: '#2fdd66',
+        fontSize: 16,
+      },
+    },
+    //提示框
+    tooltip: {
+      trigger: 'item',
+      textStyle: {
+        color: '#000',
+      },
+    },
+    //图例
+    legend: {
+      type: 'plain',
+      orient: 'vertical',
+      left: 'left',
+    },
+    //系列列表
+    series: [
+      {
+        name: '种类个数',
+        type: 'pie',
+        radius: '60%',
+        center: ['60%', '55%'],
+        data: {{ types | safe }},
+        labelLine: {
+          lineStyle: {
+            color: '#00f',
+          },
+        },
+        //设置动画效果
+        //animationType:'scale',
+        animationDuration: 5000,
+        animationEasing: 'elasticIn',
+      }],
+  }
+  option && myChart.setOption(option)
+</script>
+
+<script>
+  //电影评分折线图
+  var chartDom = document.getElementById('mainTwo')
+  var myChart = echarts.init(chartDom)
+  var option
+  option = {
+    //标题
+    title:{
+      text: '电影评分折线图',
+      left: 'center',
+      textStyle: {
+        color: '#2f7add',
+        fontSize: 16,
+      },
+    },
+    //提示框
+    tooltip: {
+      trigger: 'axis',
+      textStyle: {
+        color: '#000',
+      },
+    },
+    //图例
+    legend: {
+      orient: 'vertical',
+      left: 'right',
+    },
+    //横轴信息
+    xAxis: {
+      type: 'category',
+      data: {{ x | safe }},
+      boundaryGap: false,
+      name:'分数'
+    },
+    //纵轴信息
+    yAxis: {
+      type: 'value',
+      name:'数量',
+    },
+    //系列列表
+    series: [{
+        name:'数量',
+        type:'line',
+        data:{{ y | safe }},
+        areaStyle: {
+          color:'rgba(118,228,39,0.5)'
+        },
+        lineStyle: {
+          color:'rgba(22,113,24,0.5)'
+        },
+        itemStyle:{
+          color:'rgba(62,22,184,0.5)'
+        },
+        //设置动画效果
+        animationDuration: 5000,
+        animationEasing: 'elasticOut',
+    }]
+  }
+  option && myChart.setOption(option)
+</script>
+
+{% endblock %}
