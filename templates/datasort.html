@@ -1,51 +1,46 @@
 {% extends "base.html" %}
 {% block title %}数量信息{% endblock %}
+{% block page_name %}电影数量分析{% endblock %}
 {% block stylecontent %}
-<link href="/static/css/styles.css" rel="stylesheet"/>
 {% endblock %}
 {% block content %}
 <div class="container-fluid px-4">
-    <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"></li>
-    </ol>
+    <div class="breadcrumb-bar">
+        <a href="/home">首页</a>
+        <span class="separator">/</span>
+        <span class="current">电影数量分析</span>
+    </div>
 
-    <div class="card mb-4">
-        <div class="card-header">
-            <i class="fas fa-chart-area me-1"></i>
-            各国电影数量占比
+    <h1 class="page-title">电影数量分析</h1>
+
+    <div class="chart-full">
+        <div class="chart-full-header">
+            <h3>各国电影数量占比</h3>
         </div>
-        <div class="card-body">
+        <div class="chart-full-body">
             <div id="mainOne" style="width: 100%;height: 450px;"></div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card mb-4">
-                <div class="card-header">
-                    <i class="fas fa-chart-bar me-1"></i>
-                    各国语言数量占比
-                </div>
-                <div class="card-body">
-                    <div id="mainTwo" style="width:100%;height: 600px;"></div>
-                </div>
-            </div>
+    <div class="chart-full">
+        <div class="chart-full-header">
+            <h3>各国语言数量占比</h3>
+        </div>
+        <div class="chart-full-body">
+            <div id="mainTwo" style="width:100%;height: 600px;"></div>
         </div>
     </div>
 
-    <div class="card mb-4">
-        <div class="card-header">
-            <i class="fas fa-chart-area me-1"></i>
-            历年剧情, 喜剧数量
+    <div class="chart-full">
+        <div class="chart-full-header">
+            <h3>历年喜剧和剧情电影数量</h3>
         </div>
-        <div class="card-body">
+        <div class="chart-full-body">
             <div id="mainThree" style="width: 100%;height: 450px;"></div>
         </div>
     </div>
 
 </div>
-
-
 {% endblock %}
 {% block scriptcontent %}
 
@@ -293,4 +288,3 @@ option && myChart.setOption(option);
 </script>
 
 {% endblock %}
-

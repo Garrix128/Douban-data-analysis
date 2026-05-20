@@ -1,21 +1,22 @@
 <!doctype html>
-<html lang="zh-cn">
+<html lang="zh-CN">
 <head>
     <meta charset="utf-8">
     <title>404 - 页面未找到</title>
-    <link href="{{ url_for('static',filename='404/404.css') }}" rel="stylesheet" type="text/css">
+    <link href="/static/css/mongodb.css" rel="stylesheet"/>
 </head>
-<body>
-<!-- 代码 开始 -->
-<div class="fullScreen" id="fullScreen">
-    <img class="rotating" src="{{ url_for('static',filename='404/spaceman.svg') }}">
-    <div class="pagenotfound-text">
-        <h1>肥肠抱歉，你要找的页面不见了</h1>
-        <h2><a href="{{ url_for('home') }}">返回首页</a></h2>
+<body style="background: var(--brand-teal-deep); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px;">
+    <div style="text-align: center; max-width: 500px;">
+        <div style="width: 80px; height: 80px; background: var(--brand-green); border-radius: 16px; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 24px;">
+            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 40px; height: 40px;">
+                <rect width="32" height="32" rx="6" fill="#001e2b"/>
+                <path d="M16 6l10 5.5v11L16 28l-10-5.5v-11L16 6z" fill="#00ed64" opacity="0.9"/>
+                <circle cx="16" cy="16" r="3" fill="#00ed64"/>
+            </svg>
+        </div>
+        <h1 style="font-size: 96px; font-weight: 500; color: var(--on-dark); line-height: 1; margin-bottom: 8px; letter-spacing: -2px;">404</h1>
+        <p style="font-size: 20px; color: var(--on-dark-muted); margin-bottom: 32px;">抱歉，您要查找的页面不存在</p>
+        <a href="/home" class="btn btn-on-dark" style="display: inline-flex;">返回首页</a>
     </div>
-    <canvas id="canvas2d"></canvas>
-</div>
-<script type="text/javascript" src="{{ url_for('static',filename='404/404.js') }}"></script>
-<!-- 代码 结束 -->
 </body>
 </html>

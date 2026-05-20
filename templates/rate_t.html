@@ -1,94 +1,68 @@
 {% extends "base.html" %}
 {% block title %}评分{% endblock %}
-{% block stylecontent %}
-<link href="/static/css/styles.css" rel="stylesheet"/>
-{% endblock %}
+{% block page_name %}评分分析{% endblock %}
 {% block content %}
-<div class="container-fluid px-4">
-    <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"></li>
-    </ol>
-    <h5 class="mt-2">电影类型选择</h5>
-    <div class="card mb-4">
-        <div class="card-body" style="align-items: center">
-            <div class="btn-group" role="group" aria-label="Basic example">
-                {% if type == 'all' %}
-                <a href="/rate_t/all" class="btn btn-secondary active">全部</a>
-                {% else %}
-                <a href="/rate_t/all" class="btn btn-secondary ">全部</a>
-                {% endif %}
-                {% for i in typeAll %}
-                {% if type == i %}
-                <a href="/rate_t/{{ i }}" class="active btn btn-secondary">{{ i }}</a>
-                {% else %}
-                <a href="/rate_t/{{ i }}" class="btn btn-secondary">{{ i }}</a>
-                {% endif %}
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-    <div class="card mb-4">
-        <div class="card-header">
-            <i class="fas fa-chart-area me-1"></i>
-            电影评分统计
-        </div>
-        <div class="card-body">
-            <div id="mainOne" style="width: 100%;height: 400px"></div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="card mb-4">
-                <div class="card-header">
-                    <i class="fas fa-chart-bar me-6"></i>
-                    豆瓣评分星级饼状图
-                </div>
-                <div class="card-body">
-                    <form method="post" action="/rate_t/all">
-                        <div class="input-group">
-                            <input name="searchIpt" type="text" class="form-control" placeholder="请输入电影名关键字">
-                            <div class="input-group-append">
-                                <button type="submit" class="btn btn-primary">
-                                    搜索
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <hr>
-                <div class="card-body">
-                    <div id="mainTwo" style="width: 100%;height: 400px;">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6">
-            <div class="card mb-4">
-                <div class="card-header">
-                    <i class="fas fa-chart-bar me-1"></i>
-                    豆瓣年度评价评分柱状图
-                </div>
-                <div class="card-body">
-                    <div id="mainThree" style="width: 100%;height: 500px;">
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="breadcrumb-bar">
+    <a href="/home">首页</a>
+    <span class="separator">/</span>
+    <span class="current">评分分析</span>
+</div>
 
+<h1 class="page-title">评分分析</h1>
+
+<div class="flex flex-center gap-2" style="margin-bottom: 24px; flex-wrap: wrap;">
+    {% if type == 'all' %}
+    <a href="/rate_t/all" class="tag-pill active">全部</a>
+    {% else %}
+    <a href="/rate_t/all" class="tag-pill">全部</a>
+    {% endif %}
+    {% for i in typeAll %}
+    {% if type == i %}
+    <a href="/rate_t/{{ i }}" class="tag-pill active">{{ i }}</a>
+    {% else %}
+    <a href="/rate_t/{{ i }}" class="tag-pill">{{ i }}</a>
+    {% endif %}
+    {% endfor %}
+</div>
+
+<div class="chart-full">
+    <div class="chart-full-header">
+        <h3>电影评分统计</h3>
     </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card mb-4">
-                <div class="card-header">
-                    <i class="fas fa-chart-bar me-1"></i>
-                    豆瓣电影中外评分分布图
-                </div>
-                <div class="card-body">
-                    <div id="mainFour" style="width:100%;height:500px;">
-                    </div>
-                </div>
-            </div>
+    <div class="chart-full-body">
+        <div id="mainOne" style="width: 100%;height: 400px"></div>
+    </div>
+</div>
+
+<div class="chart-grid">
+    <div class="chart-card">
+        <div class="chart-card-header">
+            <h3>豆瓣评分星级饼状图</h3>
         </div>
+        <div class="chart-card-body">
+            <form method="post" action="/rate_t/all" style="display:flex; gap:12px; margin-bottom: 16px;">
+                <input name="searchIpt" type="text" class="search-input" placeholder="请输入电影名关键字" style="flex:1;">
+                <button type="submit" class="btn btn-primary">搜索</button>
+            </form>
+            <div id="mainTwo" style="width: 100%;height: 400px;"></div>
+        </div>
+    </div>
+    <div class="chart-card">
+        <div class="chart-card-header">
+            <h3>豆瓣年度评价评分柱状图</h3>
+        </div>
+        <div class="chart-card-body">
+            <div id="mainThree" style="width: 100%;height: 500px;"></div>
+        </div>
+    </div>
+</div>
+
+<div class="chart-full">
+    <div class="chart-full-header">
+        <h3>豆瓣电影中外评分分布图</h3>
+    </div>
+    <div class="chart-full-body">
+        <div id="mainFour" style="width:100%;height:500px;"></div>
     </div>
 </div>
 {% endblock %}
